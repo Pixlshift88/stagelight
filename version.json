@@ -1,0 +1,11 @@
+{
+  "name": "STAGELIGHT",
+  "version": "0.9.5",
+  "author": "DeJuan McCoy",
+  "description": "VFX-style relighting for AI-generated images, inside ComfyUI.",
+  "homepage": "https://github.com/Pixlshift88/stagelight",
+  "support_url": "https://buymeacoffee.com/pixlshift8d",
+  "changelog": {
+    "0.9.5": "First public release. Multi-light 3D relighting viewport with depth + normal estimation, GPU Phong shader with grade chain, Z Image Turbo and IC-Light cleanup workflows. Created by DeJuan McCoy."
+  }
+}

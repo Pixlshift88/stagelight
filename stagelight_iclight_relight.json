@@ -1,0 +1,846 @@
+{
+  "last_node_id": 14,
+  "last_link_id": 20,
+  "nodes": [
+    {
+      "id": 1,
+      "type": "LoadImage",
+      "pos": [
+        40,
+        200
+      ],
+      "size": [
+        320,
+        314
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            1
+          ]
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "example.png",
+        "image"
+      ]
+    },
+    {
+      "id": 2,
+      "type": "StagelightNode",
+      "pos": [
+        400,
+        200
+      ],
+      "size": [
+        320,
+        380
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 1
+        }
+      ],
+      "outputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "links": [
+            2
+          ]
+        },
+        {
+          "name": "depth_map",
+          "type": "IMAGE",
+          "links": null
+        },
+        {
+          "name": "normal_map",
+          "type": "IMAGE",
+          "links": null
+        },
+        {
+          "name": "relit_image",
+          "type": "IMAGE",
+          "links": null
+        },
+        {
+          "name": "subject_mask",
+          "type": "MASK",
+          "links": null
+        },
+        {
+          "name": "final_alpha",
+          "type": "MASK",
+          "links": null
+        },
+        {
+          "name": "relit_composite",
+          "type": "IMAGE",
+          "links": null
+        },
+        {
+          "name": "lighting_only",
+          "type": "IMAGE",
+          "links": [
+            3,
+            19
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "STAGELIGHT"
+      },
+      "widgets_values": [
+        -0.5,
+        1.0,
+        2.0,
+        1.0,
+        5.0,
+        2.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        0.24,
+        1.0,
+        0.1,
+        0.0,
+        0.7,
+        0.2,
+        0.1,
+        2.9,
+        0.0,
+        0.3,
+        1.0,
+        1.0,
+        1.0,
+        true,
+        false,
+        0.3,
+        16.0,
+        0.0,
+        0.0,
+        0.0,
+        60.0,
+        0.7,
+        0,
+        true,
+        0.0,
+        0.5,
+        "[{\"id\":\"L1\",\"name\":\"Key\",\"enabled\":true,\"light_x\":-0.5,\"light_y\":1.0,\"light_z\":2.0,\"target_x\":0,\"target_y\":0,\"target_z\":0,\"intensity\":1.0,\"falloff\":5.0,\"fcv\":2.0,\"light_r\":1,\"light_g\":1,\"light_b\":1,\"spec_strength\":0.3,\"spec_shiny\":16,\"light_type\":0,\"fixed_intensity\":true,\"light_size\":0,\"cone_angle\":60,\"cone_soft\":0.7}]",
+        0.05,
+        0.0,
+        false,
+        0.0,
+        1.0,
+        0.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    {
+      "id": 3,
+      "type": "CheckpointLoaderSimple",
+      "pos": [
+        40,
+        600
+      ],
+      "size": [
+        320,
+        98
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            4
+          ]
+        },
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            5,
+            6
+          ]
+        },
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            7,
+            8,
+            9,
+            10
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CheckpointLoaderSimple"
+      },
+      "widgets_values": [
+        "juggernaut_reborn.safetensors"
+      ],
+      "title": "Load SD 1.5 (Juggernaut Reborn / RealisticVision / DreamShaper)"
+    },
+    {
+      "id": 4,
+      "type": "LoadAndApplyICLightUnet",
+      "pos": [
+        400,
+        600
+      ],
+      "size": [
+        320,
+        82
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 4
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            11
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadAndApplyICLightUnet"
+      },
+      "widgets_values": [
+        "iclight_sd15_fc.safetensors"
+      ],
+      "title": "Apply IC-Light (fc = foreground-conditioned)"
+    },
+    {
+      "id": 5,
+      "type": "CLIPTextEncode",
+      "pos": [
+        40,
+        720
+      ],
+      "size": [
+        320,
+        100
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 5
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            12
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        "cinematic lighting, photorealistic, sharp focus, detailed skin, sharp fabric weave, high quality"
+      ],
+      "title": "POSITIVE - describe lighting style and material quality"
+    },
+    {
+      "id": 6,
+      "type": "CLIPTextEncode",
+      "pos": [
+        40,
+        840
+      ],
+      "size": [
+        320,
+        100
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 6
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            13
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        "flat lighting, washed out, blurry, low quality, distorted features, plastic look"
+      ],
+      "title": "NEGATIVE"
+    },
+    {
+      "id": 7,
+      "type": "VAEEncode",
+      "pos": [
+        760,
+        200
+      ],
+      "size": [
+        220,
+        46
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "pixels",
+          "type": "IMAGE",
+          "link": 2
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 7
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            14
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEEncode"
+      },
+      "title": "Encode SUBJECT (preserves identity)"
+    },
+    {
+      "id": 8,
+      "type": "VAEEncode",
+      "pos": [
+        760,
+        280
+      ],
+      "size": [
+        220,
+        46
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "pixels",
+          "type": "IMAGE",
+          "link": 3
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 8
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            15
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEEncode"
+      },
+      "title": "Encode LIGHTING_ONLY (lighting direction bias)"
+    },
+    {
+      "id": 9,
+      "type": "ICLightConditioning",
+      "pos": [
+        1020,
+        200
+      ],
+      "size": [
+        340,
+        130
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 12
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 13
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 9
+        },
+        {
+          "name": "foreground",
+          "type": "LATENT",
+          "link": 14
+        },
+        {
+          "name": "opt_background",
+          "type": "LATENT",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "links": [
+            16
+          ]
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "links": [
+            17
+          ]
+        },
+        {
+          "name": "empty_latent",
+          "type": "LATENT",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ICLightConditioning"
+      },
+      "widgets_values": [
+        0.18215
+      ],
+      "title": "IC-Light Conditioning (multiplier 0.18215 - documented VAE scale)"
+    },
+    {
+      "id": 10,
+      "type": "KSampler",
+      "pos": [
+        1400,
+        200
+      ],
+      "size": [
+        320,
+        262
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 11
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 16
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 17
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 15
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            18
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "KSampler"
+      },
+      "widgets_values": [
+        42,
+        "randomize",
+        25,
+        2.0,
+        "dpmpp_2m",
+        "karras",
+        0.5
+      ],
+      "title": "KSampler (latent_image = lighting bias)"
+    },
+    {
+      "id": 11,
+      "type": "VAEDecode",
+      "pos": [
+        1760,
+        200
+      ],
+      "size": [
+        220,
+        46
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 18
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 10
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            20
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecode"
+      }
+    },
+    {
+      "id": 12,
+      "type": "PreviewImage",
+      "pos": [
+        2000,
+        200
+      ],
+      "size": [
+        320,
+        380
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 20
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      },
+      "title": "FINAL: IC-Light relit output"
+    },
+    {
+      "id": 13,
+      "type": "PreviewImage",
+      "pos": [
+        760,
+        380
+      ],
+      "size": [
+        240,
+        240
+      ],
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 19
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      },
+      "title": "STAGELIGHT lighting_only (gradient driving IC-Light)"
+    }
+  ],
+  "links": [
+    [
+      1,
+      1,
+      0,
+      2,
+      0,
+      "IMAGE"
+    ],
+    [
+      2,
+      2,
+      0,
+      7,
+      0,
+      "IMAGE"
+    ],
+    [
+      3,
+      2,
+      7,
+      8,
+      0,
+      "IMAGE"
+    ],
+    [
+      4,
+      3,
+      0,
+      4,
+      0,
+      "MODEL"
+    ],
+    [
+      5,
+      3,
+      1,
+      5,
+      0,
+      "CLIP"
+    ],
+    [
+      6,
+      3,
+      1,
+      6,
+      0,
+      "CLIP"
+    ],
+    [
+      7,
+      3,
+      2,
+      7,
+      1,
+      "VAE"
+    ],
+    [
+      8,
+      3,
+      2,
+      8,
+      1,
+      "VAE"
+    ],
+    [
+      9,
+      3,
+      2,
+      9,
+      2,
+      "VAE"
+    ],
+    [
+      10,
+      3,
+      2,
+      11,
+      1,
+      "VAE"
+    ],
+    [
+      11,
+      4,
+      0,
+      10,
+      0,
+      "MODEL"
+    ],
+    [
+      12,
+      5,
+      0,
+      9,
+      0,
+      "CONDITIONING"
+    ],
+    [
+      13,
+      6,
+      0,
+      9,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      14,
+      7,
+      0,
+      9,
+      3,
+      "LATENT"
+    ],
+    [
+      15,
+      8,
+      0,
+      10,
+      3,
+      "LATENT"
+    ],
+    [
+      16,
+      9,
+      0,
+      10,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      17,
+      9,
+      1,
+      10,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      18,
+      10,
+      0,
+      11,
+      0,
+      "LATENT"
+    ],
+    [
+      19,
+      2,
+      7,
+      13,
+      0,
+      "IMAGE"
+    ],
+    [
+      20,
+      11,
+      0,
+      12,
+      0,
+      "IMAGE"
+    ]
+  ],
+  "groups": [
+    {
+      "title": "1. Load + STAGELIGHT",
+      "bounding": [
+        20,
+        160,
+        720,
+        460
+      ],
+      "color": "#3f789e",
+      "font_size": 20
+    },
+    {
+      "title": "2. SD 1.5 + IC-Light + prompts",
+      "bounding": [
+        20,
+        580,
+        720,
+        380
+      ],
+      "color": "#a1309b",
+      "font_size": 20
+    },
+    {
+      "title": "3. Encode + IC-Light conditioning",
+      "bounding": [
+        740,
+        160,
+        660,
+        480
+      ],
+      "color": "#629e3f",
+      "font_size": 20
+    },
+    {
+      "title": "4. Sample + decode",
+      "bounding": [
+        1380,
+        160,
+        960,
+        420
+      ],
+      "color": "#9e6f3f",
+      "font_size": 20
+    }
+  ],
+  "config": {},
+  "extra": {
+    "info": "STAGELIGHT v0.9.5 IC-Light relight workflow. Key wiring: image -> foreground (preserves subject identity), lighting_only -> KSampler latent_image (directional lighting bias). Requires SD 1.5 checkpoint + iclight_sd15_fc.safetensors + kijai's ComfyUI-IC-Light extension. Multiplier 0.18215 is the documented VAE scale factor."
+  },
+  "version": 0.4
+}
