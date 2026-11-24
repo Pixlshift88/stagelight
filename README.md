@@ -8,7 +8,7 @@ Created by **DeJuan McCoy**.
 
 Instead of fighting with prompts to describe lighting, you place actual lights
 in a 3D viewport — point, spot, and directional lights with color, falloff,
-and specular control — then let an AI cleanup pass turn your lit composite into
+and specular control, then let an AI cleanup pass turn your lit composite into
 a photorealistic image. Think Nuke's relight node meets Maya's viewport,
 feeding a diffusion model.
 
