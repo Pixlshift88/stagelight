@@ -7,7 +7,7 @@ Created by **DeJuan McCoy**.
 <p align="right"><img src="docs/dejuan_logo.png" alt="DeJuan McCoy" height="80"></p>
 
 Instead of fighting with prompts to describe lighting, you place actual lights
-in a 3D viewport — point, spot, and directional lights with color, falloff,
+in a 3D viewport, point, spot, and directional lights with color, falloff,
 and specular control, then let an AI cleanup pass turn your lit composite into
 a photorealistic image. Think Nuke's relight node meets Maya's viewport,
 feeding a diffusion model.
